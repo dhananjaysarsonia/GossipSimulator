@@ -29,18 +29,43 @@ let algorithm = "gossip"
 type Message =
     |Gossip
     |PushSum
-    |Initialize 
+    |Initialize of list<ActorRefs>
     |Dead
     |AllDead //called when all the neighbours are dead and I have nothing else to do
     |HeardYou
     |TempDead
     |KillMe
 
+
+let gossipActor(mailbox : Actor<_>) =
+    let mutable count = 0
+    let mutable neighbour = []
+    let rec loop() = actor{
+        let! message = mailbox.Receive()
+        match message with
+        | Gossip ->
+            count <- count + 1
+            if count = 10 then
+                mailbox.Context.Parent <! KillMe //please
+                
+        | Initialize(l) ->
+            neighbour <- l
+            
+        return! loop()
+        
+      
+    }
+    loop()
+
+
 //parent actor
 let supervisorActor (mailBox : Actor<_>) =
     let rec loop() = actor{
         
-        
+        let actors = [for i in 0 .. nNodes ->
+            let name = sprintf "%i" i
+            spawn mailBox name gossipActor ]
+ 
         return! loop()
     }
     
@@ -48,27 +73,17 @@ let supervisorActor (mailBox : Actor<_>) =
 let system = System.create "system" (Configuration.defaultConfig())
 let supervisor = spawn system "supervisor" supervisorActor
 //create actors here
-//first is the Gossip worker, I will call it False Media
-let gossipActor(mailbox : Actor<_>) =
-    let mutable count = 0
-    let rec loop() = actor{
-        let! message = mailbox.Receive()
-        match message with
-        | Gossip ->
-            count <- count + 1
-            if count = 10 then
-                supervisor <! KillMe //please
-              
-        //if count < 10 then
-            
-        
-        
-        
-        return! loop()
-    }
-    loop()
+//first is the Gossip worker, I will call it False Media lol
 
 
+
+
+//toDo: push sum:
+//s,w
+//s = node number
+//w = 1
+//2,1 start-> s and w half -> send both
+//recive-> add in s + s`, then if I have added s/w is not changing 10^10 variation 3 times
 
 
 
@@ -81,9 +96,9 @@ let gossipActor(mailbox : Actor<_>) =
 
 
 
-//choose topology and set neigbour to the actor
+//choose topology and set neighbour to the actor
 
-
+//first the 
 
 
 
