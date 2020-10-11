@@ -49,11 +49,8 @@ let gossipActor(mailbox : Actor<_>) =
                 mailbox.Context.Parent <! KillMe //please
                 
         | Initialize(l) ->
-            neighbour <- l
-            
+            neighbour <- l     
         return! loop()
-        
-      
     }
     loop()
 
@@ -64,7 +61,11 @@ let supervisorActor (mailBox : Actor<_>) =
         let actors = [for i in 0 .. nNodes ->
             let name = sprintf "%i" i
             spawn mailBox name gossipActor ]
- 
+        
+        //toDo for loop
+        //for all actors
+        //2d get neighbour
+        //currentActor <| neighbour
         return! loop()
     }  
     loop()
