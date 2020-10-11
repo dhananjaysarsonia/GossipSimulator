@@ -139,14 +139,23 @@ let line node total_nodes =
            else if node == total_nodes then ->  total_nodes - 1
            else -> node - 1 ; node + 1|]
     
+//let imp2D node total_nodes =
+//    let neighbour_list =
+//        (Array.append[|
+//          let primary_list =  2D(node, total_nodes)
+//          let random-node = [|random.Next(1,total_nodes)|]
+//        |])
+    
 let imp2D node total_nodes =
     let neighbour_list =
         (Array.append[|
           let primary_list =  2D(node, total_nodes)
-          let random-node = [|random.Next(1,total_nodes)|]
+          
+          let random_node =
+              [|random.Next(1,total_nodes)|]
+              while Array.exists(primary_list, random_node) do
+                random_node = [|random.Next(1,total_nodes)|]        
         |])
-    
-
 
 
 //first the 
