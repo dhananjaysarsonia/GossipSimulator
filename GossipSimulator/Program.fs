@@ -102,7 +102,7 @@ let random = new System.Random()
 //for 2D and imp2D
 //N = sqrt(float total_nodes)
 
-let twoD node total_nodes N =
+let twoD (node : int) (total_nodes : int) (N : int) =
     let neighbour_list =
         [|
             //left column
