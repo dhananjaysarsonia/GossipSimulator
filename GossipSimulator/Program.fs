@@ -99,45 +99,63 @@ let supervisor = spawn system "supervisor" supervisorActor
 let random = new System.Random()
 //choose topology and set neigbour to the actor
 
-//for 2D and imp2D  N = sqrt(float total_nodes)
+//for 2D and imp2D
+//N = sqrt(float total_nodes)
 
-let 2D node total_nodes =
+let twoD node total_nodes N =
     let neighbour_list =
         [|
             //left column
             if(node % N = 1 ) then
-                if(node = 1) then -> 2; 1 + N
-                else if (node = total_nodes - N + 1) then -> node - N ; node+1
-                else -> node+1; node - N ; node + N
+                if(node = 1) then 
+                    2; 1 + N
+                else if (node = total_nodes - N + 1) then
+                    node - N ; node+1
+                else
+                    node+1; node - N ; node + N
                 
             //right column
             else if(node % N = 0) then
-                if(node = N) then -> node-1; node + N
-                else if (node = total_nodes) then -> node-1; node - N
-                else -> node-1; node - N; node + N
+                if(node = N) then
+                    node-1; node + N
+                else if (node = total_nodes) then
+                    node-1; node - N
+                else
+                    node-1; node - N; node + N
                 
             //top row
-            else if (node < N and node > 1) then -> node - 1; node + 1; node + N
+            else if (node < N && node > 1) then
+                node - 1; node + 1; node + N
                 
             //bottom row
-            else if (node < total_nodes and node > total_nodes - N) then -> node - 1; node + 1; node - N
+            else if ((node < total_nodes) && (node > total_nodes - N)) then
+                node - 1; node + 1; node - N
             
             //all four neighbours
-            else -> node + 1; node - 1; node + N ; node - N 
+            else
+                node + 1; node - 1; node + N ; node - N 
                     
         |]
+        
+    neighbour_list
         
 let full node total_nodes =
     let neighbour_list =
         [| for x in 1 .. total_nodes do
-            if x <> node then  -> x|]
+            if x <> node then x|]
+    neighbour_list   
+    
 
 
 let line node total_nodes =
     let neighbour_list =
-        [| if node == 1 then -> 2
-           else if node == total_nodes then ->  total_nodes - 1
-           else -> node - 1 ; node + 1|]
+        [| if node = 1 then 2
+           else if
+               node = total_nodes then total_nodes - 1
+           else
+               node - 1 ; node + 1|]
+    neighbour_list    
+    
     
 //let imp2D node total_nodes =
 //    let neighbour_list =
@@ -146,16 +164,30 @@ let line node total_nodes =
 //          let random-node = [|random.Next(1,total_nodes)|]
 //        |])
     
-let imp2D node total_nodes =
-    let neighbour_list =
-        (Array.append[|
-          let primary_list =  2D(node, total_nodes)
-          
-          let random_node =
-              [|random.Next(1,total_nodes)|]
-              while Array.exists(primary_list, random_node) do
-                random_node = [|random.Next(1,total_nodes)|]        
-        |])
+//let imp2D node total_nodes N =
+//    let neighbour_list =
+//        (Array.append[|
+//          let primary_list =  twoD node total_nodes N
+//          
+////          let random_node =
+////              [|random.Next(1,total_nodes)|]
+//          
+//          let mutable isExist = true
+//          let mutable index = 0
+//          while isExist do
+//              isExist <- Array.exists () neighbour_list
+//              
+//              
+//              
+//  
+//    
+////          while Array.exists ((=) random_node) primary_list  do
+////            random_node = [|random.Next(1,total_nodes)|]        
+//        |])
+        
+        
+    //neighbour_list
+        
 
 
 //first the 
