@@ -39,7 +39,7 @@ type Message =
 
 let gossipActor(mailbox : Actor<_>) =
     let mutable count = 0
-    let mutable neighbour = []
+    let mutable neighbour : list<ActorRefs> = []
     let rec loop() = actor{
         let! message = mailbox.Receive()
         match message with
@@ -61,14 +61,12 @@ let gossipActor(mailbox : Actor<_>) =
 //parent actor
 let supervisorActor (mailBox : Actor<_>) =
     let rec loop() = actor{
-        
         let actors = [for i in 0 .. nNodes ->
             let name = sprintf "%i" i
             spawn mailBox name gossipActor ]
  
         return! loop()
-    }
-    
+    }  
     loop()
 let system = System.create "system" (Configuration.defaultConfig())
 let supervisor = spawn system "supervisor" supervisorActor
