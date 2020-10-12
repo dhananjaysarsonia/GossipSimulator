@@ -40,6 +40,7 @@ type Message =
 let gossipActor(mailbox : Actor<_>) =
     let mutable count = 0
     let mutable neighbour : list<ActorRefs> = []
+    //let mutable neighbour : int[] = [||]
     let rec loop() = actor{
         let! message = mailbox.Receive()
         match message with
@@ -58,23 +59,22 @@ let gossipActor(mailbox : Actor<_>) =
 //parent actor
 let supervisorActor (mailBox : Actor<_>) =
     let rec loop() = actor{
-        let actors = [for i in 0 .. nNodes ->
+        let actors = [for i in 1 .. nNodes ->
             let name = sprintf "%i" i
             spawn mailBox name gossipActor ]
-        
         //toDo for loop
         //for all actors
         //2d get neighbour
         //currentActor <| neighbour
+        
+        
         return! loop()
-    }  
+    }
     loop()
 let system = System.create "system" (Configuration.defaultConfig())
 let supervisor = spawn system "supervisor" supervisorActor
 //create actors here
 //first is the Gossip worker, I will call it False Media lol
-
-
 
 
 //toDo: push sum:
@@ -162,16 +162,16 @@ let line node total_nodes =
 //          let random-node = [|random.Next(1,total_nodes)|]
 //        |])
 
-let generate_random (primary_list: int []) (total_nodes: int): int [] =
+let generate_random (primary_list: int []) (total_nodes: int) (node:int): int [] =
     let random = new System.Random()
     let mutable temp = random.Next(1, total_nodes)
-    while(primary_list |> Array.exists(fun elem -> elem = temp )) do
+    while(primary_list |> Array.exists(fun elem -> elem = temp && elem = node )) do
         temp <- random.Next(1, total_nodes)
     [|temp|]
 
 let imp2D node total_nodes N =
     let primary_list =  twoD node total_nodes N
-    let temp = generate_random primary_list total_nodes
+    let temp = generate_random primary_list total_nodes node
     Array.append primary_list temp
     
 
@@ -181,6 +181,12 @@ let imp2D node total_nodes N =
 //          generate_random primary_list total_nodes
 //        |])   
 //    neighbour_list
+
+
+//to check topology implementations
+//let temp2d = imp2D 5 16 4
+//for i in temp2d do
+//    printfn "%d" i
 
 
 //first the 
