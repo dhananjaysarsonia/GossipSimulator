@@ -170,12 +170,17 @@ let generate_random (primary_list: int []) (total_nodes: int): int [] =
     [|temp|]
 
 let imp2D node total_nodes N =
-    let neighbour_list =
-        (Array.append[|
-          let primary_list =  twoD node total_nodes N
-          generate_random primary_list total_nodes
-        |])   
-    neighbour_list
+    let primary_list =  twoD node total_nodes N
+    let temp = generate_random primary_list total_nodes
+    Array.append primary_list temp
+    
+
+//    let neighbour_list =
+//        (Array.append[|
+//          let primary_list =  twoD node total_nodes N
+//          generate_random primary_list total_nodes
+//        |])   
+//    neighbour_list
 
 
 //first the 
