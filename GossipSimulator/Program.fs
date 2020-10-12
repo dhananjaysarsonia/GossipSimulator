@@ -97,9 +97,6 @@ let supervisor = spawn system "supervisor" supervisorActor
 
 //choose topology and set neighbour to the actor
 
-let random = new System.Random()
-//choose topology and set neigbour to the actor
-
 //for 2D and imp2D
 //N = sqrt(float total_nodes)
 
@@ -164,31 +161,21 @@ let line node total_nodes =
 //          let primary_list =  2D(node, total_nodes)
 //          let random-node = [|random.Next(1,total_nodes)|]
 //        |])
-    
-//let imp2D node total_nodes N =
-//    let neighbour_list =
-//        (Array.append[|
-//          let primary_list =  twoD node total_nodes N
-//          
-////          let random_node =
-////              [|random.Next(1,total_nodes)|]
-//          
-//          let mutable isExist = true
-//          let mutable index = 0
-//          while isExist do
-//              isExist <- Array.exists () neighbour_list
-//              
-//              
-//              
-//  
-//    
-////          while Array.exists ((=) random_node) primary_list  do
-////            random_node = [|random.Next(1,total_nodes)|]        
-//        |])
-        
-        
-    //neighbour_list
-        
+
+let generate_random (primary_list: int []) (total_nodes: int): int [] =
+    let random = new System.Random()
+    let mutable temp = random.Next(1, total_nodes)
+    while(primary_list |> Array.exists(fun elem -> elem = temp )) do
+        temp <- random.Next(1, total_nodes)
+    [|temp|]
+
+let imp2D node total_nodes N =
+    let neighbour_list =
+        (Array.append[|
+          let primary_list =  twoD node total_nodes N
+          generate_random primary_list total_nodes
+        |])   
+    neighbour_list
 
 
 //first the 
