@@ -1,5 +1,4 @@
 ﻿// Learn more about F# at http://fsharp.org
-
 open System
 open System.Runtime.CompilerServices
 open System.Threading.Tasks
@@ -9,14 +8,23 @@ open Akka.Dispatch.SysMsg
 open Akka.FSharp
 open Akka.Actor
 open System.Diagnostics
+open Akka.Util
 
 //let's make a gossip actor first and then create a topology
 //input will be num_nodes, topology, algorithm
 
 
-let nNodes = 100
+//let nNodes = 100
+let total_nodes = 100
 let topology = "line"
 let algorithm = "gossip"
+let random = new System.Random()
+
+type sum_weight = {
+  value1:int;
+  value2:int
+}
+let mutable pushsum_array  = Array.init<sum_weight> total_nodes (fun x -> {value1 = 0; value2 = 0})
 
 //what can be the message types
 //there can be a gossip type with just state called gossp
@@ -28,7 +36,7 @@ let algorithm = "gossip"
 //create message types here
 type Message =
     |Gossip
-    |PushSum
+    |PushSum 
     |Initialize of list<ActorRefs>
     |Dead
     |AllDead //called when all the neighbours are dead and I have nothing else to do
@@ -55,11 +63,36 @@ let gossipActor(mailbox : Actor<_>) =
     }
     loop()
 
+let pushsumActor(mailbox : Actor<_>)=
+    let mutable node = random.Next(1,total_nodes)
+    let mutable sum = node
+    let mutable weight = 1
+    let mutable ratio_list = []
+    let rec loop() = actor{
+        let! message = mailbox.Receive()
+        match message with
+        | PushSum ->
+            let mutable s = pushsum_array.[node].value1 + sum
+            let mutable w = pushsum_array.[node].value2+ weight
+            pushsum_array.[node] <- {value1 = s ; value2 = w}
+            ratio_list <- [float(pushsum_array.[node].value1 / pushsum_array.[node].value2)] |> List.append ratio_list
+            if(List.length[ratio_list] > 2) then
+                if(ratio_list.Item(List.length[ratio_list]) - ratio_list.Item(List.length[ratio_list] - 1) < 0.0000000001 &&
+                   ratio_list.Item(List.length[ratio_list] - 1) - ratio_list.Item(List.length[ratio_list] - 2) < 0.0000000001) then
+                     mailbox.Context.System.Terminate () |> ignore
+            else
+                node <- random.Next(1,total_nodes)
+                sum <- sum/2
+                weight <- weight/2
+        return! loop()    
+    }
+    loop()
 
+ 
 //parent actor
 let supervisorActor (mailBox : Actor<_>) =
     let rec loop() = actor{
-        let actors = [for i in 1 .. nNodes ->
+        let actors = [for i in 1 .. total_nodes ->
             let name = sprintf "%i" i
             spawn mailBox name gossipActor ]
         //toDo for loop
@@ -83,6 +116,7 @@ let supervisor = spawn system "supervisor" supervisorActor
 //w = 1
 //2,1 start-> s and w half -> send both
 //recive-> add in s + s`, then if I have added s/w is not changing 10^10 variation 3 times
+
 
 
 
@@ -163,7 +197,6 @@ let line node total_nodes =
 //        |])
 
 let generate_random (primary_list: int []) (total_nodes: int) (node:int): int [] =
-    let random = new System.Random()
     let mutable temp = random.Next(1, total_nodes)
     while(primary_list |> Array.exists(fun elem -> elem = temp && elem = node )) do
         temp <- random.Next(1, total_nodes)
@@ -187,7 +220,7 @@ let imp2D node total_nodes N =
 //let temp2d = imp2D 5 16 4
 //for i in temp2d do
 //    printfn "%d" i
-
+//
 
 //first the 
 

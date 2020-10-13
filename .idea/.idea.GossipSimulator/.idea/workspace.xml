@@ -29,8 +29,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="imp2D changes">
+    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="Topologies checked. Works correctly.">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GossipSimulator/Program.fs" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/Program.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/fsac.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/fsac.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +55,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/GossipSimulator/code.fsx" />
+        <option value="$PROJECT_DIR$/GossipSimulator/code.fs" />
         <option value="$PROJECT_DIR$/GossipSimulator/Program.fs" />
       </list>
     </option>
@@ -96,7 +101,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602531208758</updated>
-      <workItem from="1602531224568" duration="3829000" />
+      <workItem from="1602531224568" duration="8566000" />
+      <workItem from="1602610764841" duration="6077000" />
     </task>
     <task id="LOCAL-00001" summary="imp2D changes">
       <created>1602531828312</created>
@@ -112,13 +118,20 @@
       <option name="project" value="LOCAL" />
       <updated>1602533733592</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Topologies checked. Works correctly.">
+      <created>1602536416880</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1602536416880</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -142,33 +155,39 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="imp2D changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="imp2D changes" />
+    <MESSAGE value="Topologies checked. Works correctly." />
+    <option name="LAST_COMMIT_MESSAGE" value="Topologies checked. Works correctly." />
   </component>
   <component name="WindowStateProjectService">
     <state x="524" y="268" width="632" height="510" key="#Context_Actions" timestamp="1602535955337">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="524" y="268" width="632" height="510" key="#Context_Actions/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602535955337" />
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1602536232904">
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1602610817147">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602536232904" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1602536232902">
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672624" />
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817147" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1602610817145">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.center/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602536232902" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1602536232901">
+    <state width="1638" height="295" key="GridCell.Tab.0.center/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672622" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817145" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1602610817144">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.left/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602536232901" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1602536232903">
+    <state width="1638" height="295" key="GridCell.Tab.0.left/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672619" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817144" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1602610817146">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.right/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602536232903" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672623" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817146" />
     <state x="100" y="100" width="1480" height="850" key="VCS.FileHistoryDialog" timestamp="1602531627686">
       <screen x="0" y="23" width="1680" height="963" />
     </state>
@@ -181,24 +200,5 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="610" y="421" key="git4idea.remote.GitConfigureRemotesDialog/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602533236290" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/GossipSimulator/Program.fs</url>
-          <line>184</line>
-          <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="184">
-            <startOffsets>
-              <option value="4847" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4870" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
