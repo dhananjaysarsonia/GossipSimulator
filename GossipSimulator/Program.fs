@@ -16,7 +16,7 @@ open System.Threading;
 
 
 //let nNodes = 100
-let total_nodes = 100
+let total_nodes = 500
 let topology = "line"
 //let algorithm = "gossip"
 let algorithm = "pushsum"  
@@ -56,6 +56,7 @@ type Message =
     |Stuck
 
 
+
 let gossipActor(mailbox : Actor<_>) =
     let mutable count = 0
     let mutable start = false
@@ -70,6 +71,8 @@ let gossipActor(mailbox : Actor<_>) =
             
 //            let selected = random.Next(0, neighbour.Length)
 //            actors.[neighbour.[selected]] <! Gossip(actors)
+
+            
             if start = false then 
                 mailbox.Self <! NeighbourGossip(actors)
             
@@ -81,6 +84,7 @@ let gossipActor(mailbox : Actor<_>) =
                 
         | NeighbourGossip(actors) ->
             if count < 10 then
+                
                 let selected = random.Next(0, neighbour.Length)
                 //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
                 actors.[neighbour.[selected]] <! Gossip(actors)
@@ -107,6 +111,7 @@ let pushsumActor(mailbox : Actor<_>)=
     let mutable ratio : decimal = 0m
     let rec loop() = actor{
         let! message = mailbox.Receive()
+        //Thread.Sleep(10) |> ignore
         //Thread.Sleep(10)
         match message with
         |InitializePushSum(s,w) ->
@@ -127,38 +132,41 @@ let pushsumActor(mailbox : Actor<_>)=
                     if deadActors.[neighbour.[i]] = 0 then
                         iHaveFriends <- true
                         
-                let mutable selected = -1
+                let mutable selected = random.Next(0, neighbour.Length)
                 let mutable notbreak = true
                 while iHaveFriends &&  notbreak do
                     selected <- random.Next(0, neighbour.Length)
                     notbreak <- deadActors.[neighbour.[selected]] = deadOrStuck
                     
-                if iHaveFriends then
+               // if iHaveFriends then
                    // printf "sending %s -> %s with s %f and w %f \n" mailbox.Context.Self.Path.Name  actors.[neighbour.[selected]].Path.Name sum weight
-                    actors.[neighbour.[selected]] <! PushSum(sum,weight)
-                    ratio <- sum / weight
-                   // printf "the checked ratio %f \n" (Math.Abs(prev - ratio))
-                    if ( Math.Abs(prev - ratio)) < 0.0000000001m then
-                       count <- count + 1 
-                    else
-                        count <- 0
-                        
-                    prev <- ratio
-                    if count = 3 then
-                        running <- false
-                       // 
-                        mailbox.Context.Parent <! KillMe
+                actors.[neighbour.[selected]] <! PushSum(sum,weight)
+                ratio <- sum / weight
+               // printf "the checked ratio %f \n" (Math.Abs(prev - ratio))
+                if ( Math.Abs(prev - ratio)) < 0.0000000001m then
+                   count <- count + 1 
                 else
-                    //printf "here"
-                    mailbox.Context.Parent <! Stuck
+                    count <- 0
+                    
+                prev <- ratio
+                if count = 3 then
+                    running <- false
+                   //
+                    printf "the final ratio is %A \n" ratio
+                    mailbox.Context.Parent <! KillMe
+//                else
+//                    //printf "here"
+//                    mailbox.Context.Parent <! Stuck
                      // please
                     
             else
-                let sender = mailbox.Sender ()
+               // let sender = mailbox.Sender ()
+                let mutable selected = random.Next(0, neighbour.Length)
+                actors.[neighbour.[selected]] <! PushSum(s,w)
                 //Thread.Sleep(100)
                //printf "dead, send it to someone else \n"
-                sender <! PSCantProcess(sum,weight)
-            Thread.Sleep(1)
+              //  sender <! PSCantProcess(sum,weight)
+            //Thread.Sleep(10) |> ignore
         | Initialize(l) ->
             neighbour <- l
           //  printf "%A has neighbours %A \n" mailbox.Context.Self.Path.Name neighbour 
@@ -169,12 +177,16 @@ let pushsumActor(mailbox : Actor<_>)=
             let mutable iHaveFriends = false
             printf "sending to someone else \n"
             for i in 0 .. (neighbour.Length - 1) do
-                if deadActors.[neighbour.[i]] = 0 then
+                if deadActors.[neighbour.[i]] <> deadOrStuck then
                     iHaveFriends <- true
                     
-            let mutable selected = 0
+            let mutable selected = -1
             let mutable notbreak = true
-            //printf "neighbour length %d" neighbour.Length 
+            //printf "neighbour length %d" neighbour.Length
+            
+//            for i in 0 .. (neighbour.Length - 1) do
+//              if deadActors.[neighbour.[i]] <> deadOrStuck then
+//                  selected <- i
             while iHaveFriends &&  notbreak do
                 selected <- random.Next(0, neighbour.Length)
                 notbreak <- deadActors.[neighbour.[selected]] = deadOrStuck
@@ -313,7 +325,7 @@ let supervisorActor (mailBox : Actor<_>) =
             printf "%A" child.Path.Name
             printf "%d \n" count
             deadActors.[int <| child.Path.Name] <- deadOrStuck
-            child <! PoisonPill.Instance
+            //child <! PoisonPill.Instance
             //printf "dead child name: %d \n" (int <| child.Path.Name)
             
             
@@ -325,6 +337,8 @@ let supervisorActor (mailBox : Actor<_>) =
             if stuckActors.[index] = 0 then
                 stuck <- stuck + 1
                 stuckActors.[index] <- deadOrStuck
+                
+        
             
         return! loop()
   
