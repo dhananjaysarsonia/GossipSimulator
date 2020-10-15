@@ -16,7 +16,8 @@ open System.Threading;
 
 
 //let nNodes = 100
-let total_nodes = 100
+//#time "on"
+let total_nodes = 64
 let topology = "line"
 //let algorithm = "gossip"
 let algorithm = "gossip"  
@@ -334,7 +335,7 @@ let supervisorActor (mailBox : Actor<_>) =
                     let name = sprintf "%d" i
                    // printf "%d" i
                     actors.[i] <- spawn mailBox name gossipActor
-                    let connections = twoD i total_nodes 10
+                    let connections = twoD i total_nodes 8
                     actors.[i] <! Initialize connections 
                     
                 actors.[50] <! Gossip(actors)
@@ -359,6 +360,8 @@ let supervisorActor (mailBox : Actor<_>) =
             printf "%d \n" count
             deadActors.[int <| child.Path.Name] <- deadOrStuck
             stuckActors.[int <| child.Path.Name] <- 0
+            if count = total_nodes then
+                 mailBox.Context.System.Terminate () |> ignore
             //child <! PoisonPill.Instance
             //printf "dead child name: %d \n" (int <| child.Path.Name)
             
@@ -396,7 +399,8 @@ let supervisorActor (mailBox : Actor<_>) =
 let system = System.create "system" (Configuration.defaultConfig())
 let supervisor = spawn system "supervisor" supervisorActor
 supervisor <! Start
-System.Console.ReadLine() |> ignore
+system.WhenTerminated.Wait ()
+//System.Console.ReadLine() |> ignore
 //    let neighbour_list =
 //        (Array.append[|
 //          let primary_list =  twoD node total_nodes N
