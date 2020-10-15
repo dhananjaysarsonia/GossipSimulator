@@ -15,7 +15,7 @@ open Akka.Util
 
 
 //let nNodes = 100
-let total_nodes = 100
+let total_nodes = 1000
 let topology = "line"
 let algorithm = "gossip"
 let random = new System.Random()
@@ -71,10 +71,12 @@ let gossipActor(mailbox : Actor<_>) =
            // else
                 
         | NeighbourGossip(actors) ->
-            let selected = random.Next(0, neighbour.Length)
-            actors.[neighbour.[selected]] <! Gossip(actors)
-            mailbox.Self <! NeighbourGossip(actors)
-            
+            if count < 10 then
+                let selected = random.Next(0, neighbour.Length)
+              //  printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
+                actors.[neighbour.[selected]] <! Gossip(actors)
+                mailbox.Self <! NeighbourGossip(actors)
+            //Async.Sleep 100 |> ignore
         | Initialize(l) ->
             neighbour <- l     
         return! loop()
@@ -224,15 +226,18 @@ let supervisorActor (mailBox : Actor<_>) =
             for i in 1 .. (total_nodes) do
                // printf "%d" i
                 let name = sprintf "%d" i
+               // printf "%d" i
                 actors.[i] <- spawn mailBox name gossipActor
-                let connections = line i total_nodes
-                actors.[i] <! Initialize connections
+                let connections = full i total_nodes 
+                actors.[i] <! Initialize connections 
                 
-            actors.[50] <! Gossip(actors)
+            actors.[1] <! Gossip(actors)
     
         | KillMe ->
             count <- count + 1
-            printf "%d " count
+            let child = mailBox.Sender ()
+            printf "%A" child.Path.Name
+            printf "%d \n" count
         return! loop()
   
     }

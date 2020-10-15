@@ -1405,19 +1405,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/forumgala/.nuget/packages/": {}
+    "/Users/dhananjaysarsonia/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/forumgala/Desktop/Fall_2020/DOS/Proj2/GossipSimulator/GossipSimulator/GossipSimulator.fsproj",
+      "projectUniqueName": "/Users/dhananjaysarsonia/RiderProjects/GossipSimulatorForum/GossipSimulator/GossipSimulator.fsproj",
       "projectName": "GossipSimulator",
-      "projectPath": "/Users/forumgala/Desktop/Fall_2020/DOS/Proj2/GossipSimulator/GossipSimulator/GossipSimulator.fsproj",
-      "packagesPath": "/Users/forumgala/.nuget/packages/",
-      "outputPath": "/Users/forumgala/Desktop/Fall_2020/DOS/Proj2/GossipSimulator/GossipSimulator/obj/",
+      "projectPath": "/Users/dhananjaysarsonia/RiderProjects/GossipSimulatorForum/GossipSimulator/GossipSimulator.fsproj",
+      "packagesPath": "/Users/dhananjaysarsonia/.nuget/packages/",
+      "outputPath": "/Users/dhananjaysarsonia/RiderProjects/GossipSimulatorForum/GossipSimulator/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/forumgala/.nuget/NuGet/NuGet.Config"
+        "/Users/dhananjaysarsonia/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
