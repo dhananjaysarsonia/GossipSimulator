@@ -91,6 +91,7 @@ let pushsumActor(mailbox : Actor<_>)=
     let mutable node = random.Next(1,total_nodes)
     let mutable sum = node
     let mutable weight = 1
+    let mutable condition = false
     let mutable ratio_list = []
     let rec loop() = actor{
         let! message = mailbox.Receive()
@@ -232,7 +233,7 @@ let supervisorActor (mailBox : Actor<_>) =
                 let name = sprintf "%d" i
                // printf "%d" i
                 actors.[i] <- spawn mailBox name gossipActor
-                let connections = line i total_nodes 
+                let connections = twoD i total_nodes 10
                 actors.[i] <! Initialize connections 
                 
             actors.[50] <! Gossip(actors)
