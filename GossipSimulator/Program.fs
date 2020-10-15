@@ -18,7 +18,8 @@ open System.Threading;
 //let nNodes = 100
 let total_nodes = 100
 let topology = "line"
-let algorithm = "gossip"
+//let algorithm = "gossip"
+let algorithm = "pushsum"  
 let random = new System.Random()
 
 type sum_weight = {
@@ -38,8 +39,9 @@ let mutable pushsum_array  = Array.init<sum_weight> total_nodes (fun x -> {value
 type Message =
     |Gossip of IActorRef[]
     |NeighbourGossip of IActorRef[]
-    |PushSum 
+    |PushSum of double*double*IActorRef[]
     |Initialize of int[]
+    |InitializePushSum of double*double
     |Dead
     |AllDead //called when all the neighbours are dead and I have nothing else to do
     |HeardYou
@@ -88,27 +90,42 @@ let gossipActor(mailbox : Actor<_>) =
     loop()
 
 let pushsumActor(mailbox : Actor<_>)=
-    let mutable node = random.Next(1,total_nodes)
-    let mutable sum = node
-    let mutable weight = 1
-    let mutable condition = false
-    let mutable ratio_list = []
+    //let mutable node = random.Next(1,total_nodes)
+    let mutable sum : double = 0.0
+    let mutable weight : double = 0.0
+    let mutable neighbour : int[] = [||]
+    let mutable index = 0
+    let mutable prev : double = 0.0
+    let mutable count = 0
+    let mutable ratio : double = 0.0
     let rec loop() = actor{
         let! message = mailbox.Receive()
         match message with
-        | PushSum ->
-            let mutable s = pushsum_array.[node].value1 + sum
-            let mutable w = pushsum_array.[node].value2+ weight
-            pushsum_array.[node] <- {value1 = s ; value2 = w}
-            ratio_list <- [float(pushsum_array.[node].value1 / pushsum_array.[node].value2)] |> List.append ratio_list
-            if(List.length[ratio_list] > 2) then
-                if(ratio_list.Item(List.length[ratio_list]) - ratio_list.Item(List.length[ratio_list] - 1) < 0.0000000001 &&
-                   ratio_list.Item(List.length[ratio_list] - 1) - ratio_list.Item(List.length[ratio_list] - 2) < 0.0000000001) then
-                     mailbox.Context.System.Terminate () |> ignore
+        |InitializePushSum(s,w) ->
+            sum <- s
+            weight <- w
+            
+        | PushSum(s,w, actors) ->
+//            let mutable s = pushsum_array.[node].value1 + sum
+//            let mutable w = pushsum_array.[node].value2+ weight
+            sum <- sum + s
+            weight <- weight + w
+            
+            sum <- sum / 2.0
+            weight <- weight / 2.0
+            let selected = random.Next(0, neighbour.Length)
+            actors.[neighbour.[selected]] <! PushSum(sum,weight, actors)
+            if ( abs <| prev - ratio) < 0.0000000001 then
+               count <- count + 1 // please
             else
-                node <- random.Next(1,total_nodes)
-                sum <- sum/2
-                weight <- weight/2
+                count <- 0
+                
+            prev <- ratio
+            if count = 3 then
+                mailbox.Context.Parent <! KillMe
+            
+        | Initialize(l) ->
+            neighbour <- l     
         return! loop()    
     }
     loop()
@@ -228,15 +245,34 @@ let supervisorActor (mailBox : Actor<_>) =
         let! message = mailBox.Receive()
         match message with
         | Start ->
-            for i in 1 .. (total_nodes) do
-               // printf "%d" i
-                let name = sprintf "%d" i
-               // printf "%d" i
-                actors.[i] <- spawn mailBox name gossipActor
-                let connections = twoD i total_nodes 10
-                actors.[i] <! Initialize connections 
+            
+            match algorithm with
+            | "gossip" ->
+                for i in 1 .. (total_nodes) do
+                   // printf "%d" i
+                    let name = sprintf "%d" i
+                   // printf "%d" i
+                    actors.[i] <- spawn mailBox name gossipActor
+                    let connections = line i total_nodes 
+                    actors.[i] <! Initialize connections 
+                    
+                actors.[50] <! Gossip(actors)
                 
-            actors.[50] <! Gossip(actors)
+            | "pushsum" ->
+                for i in 1 .. total_nodes do
+                    let name = sprintf "%d" i
+                    actors.[i] <- spawn mailBox name pushsumActor
+                    let connections = twoD i total_nodes 10
+                    actors.[i] <! Initialize connections
+                    actors.[i] <! InitializePushSum(double <| i,double <| 1)
+                
+                actors.[50] <! PushSum(0.0,0.0,actors) //is it me or these 0.0 looks like eyes and nose of someone? lol
+            
+            
+            
+            
+            
+            
     
         | KillMe ->
             count <- count + 1
