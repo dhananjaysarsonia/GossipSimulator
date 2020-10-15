@@ -16,7 +16,7 @@ open System.Threading;
 
 
 //let nNodes = 100
-let total_nodes = 100
+let total_nodes = 10
 let topology = "line"
 //let algorithm = "gossip"
 let algorithm = "pushsum"  
@@ -95,6 +95,7 @@ let pushsumActor(mailbox : Actor<_>)=
     let mutable weight : double = 0.0
     let mutable neighbour : int[] = [||]
     let mutable index = 0
+    let mutable running = true
     let mutable prev : double = 0.0
     let mutable count = 0
     let mutable ratio : double = 0.0
@@ -106,23 +107,26 @@ let pushsumActor(mailbox : Actor<_>)=
             weight <- w
             
         | PushSum(s,w, actors) ->
-//            let mutable s = pushsum_array.[node].value1 + sum
-//            let mutable w = pushsum_array.[node].value2+ weight
-            sum <- sum + s
-            weight <- weight + w
-            
-            sum <- sum / 2.0
-            weight <- weight / 2.0
-            let selected = random.Next(0, neighbour.Length)
-            actors.[neighbour.[selected]] <! PushSum(sum,weight, actors)
-            if ( abs <| prev - ratio) < 0.0000000001 then
-               count <- count + 1 // please
-            else
-                count <- 0
+
+            if running then
+                sum <- sum + s
+                weight <- weight + w
                 
-            prev <- ratio
-            if count = 3 then
-                mailbox.Context.Parent <! KillMe
+                sum <- sum / 2.0
+                weight <- weight / 2.0
+                let selected = random.Next(0, neighbour.Length)
+                //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
+                actors.[neighbour.[selected]] <! PushSum(sum,weight, actors)
+                ratio <- sum / weight
+                if ( abs <| prev - ratio) < 0.0000000001 then
+                   count <- count + 1 
+                else
+                    count <- 0
+                    
+                prev <- ratio
+                if count = 3 then
+                    //running <- false
+                    mailbox.Context.Parent <! KillMe // please
             
         | Initialize(l) ->
             neighbour <- l     
@@ -262,11 +266,11 @@ let supervisorActor (mailBox : Actor<_>) =
                 for i in 1 .. total_nodes do
                     let name = sprintf "%d" i
                     actors.[i] <- spawn mailBox name pushsumActor
-                    let connections = twoD i total_nodes 10
+                    let connections = full i total_nodes 
                     actors.[i] <! Initialize connections
                     actors.[i] <! InitializePushSum(double <| i,double <| 1)
                 
-                actors.[50] <! PushSum(0.0,0.0,actors) //is it me or these 0.0 looks like eyes and nose of someone? lol
+                actors.[1] <! PushSum(0.0,0.0,actors) //is it me or these 0.0 looks like eyes and nose of someone? lol
             
             
             

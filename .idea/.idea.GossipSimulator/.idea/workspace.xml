@@ -29,7 +29,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="For test">
+    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="pushsum initialization">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GossipSimulator/Program.fs" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/Program.fs" afterDir="false" />
     </list>
@@ -56,6 +56,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/928AD4A6-4BB8-48B8-9A0B-702230D4D0B3/FB/UntypedActor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dhananjaysarsonia/RiderProjects/GossipSimulatorForum/GossipSimulator/Program.fs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dhananjaysarsonia/RiderProjects/GossipSimulatorForum/GossipSimulator/Program.fs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/928AD4A6-4BB8-48B8-9A0B-702230D4D0B3/BE/ActorBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/928AD4A6-4BB8-48B8-9A0B-702230D4D0B3/A2/Mailbox.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -112,7 +114,7 @@
       <updated>1602531208758</updated>
       <workItem from="1602531224568" duration="8566000" />
       <workItem from="1602610764841" duration="6077000" />
-      <workItem from="1602697642361" duration="16090000" />
+      <workItem from="1602697642361" duration="23884000" />
     </task>
     <task id="LOCAL-00001" summary="imp2D changes">
       <created>1602531828312</created>
@@ -163,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1602731207155</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="For test">
+      <created>1602733596692</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1602733596692</updated>
+    </task>
+    <task id="LOCAL-00009" summary="pushsum initialization">
+      <created>1602742241079</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1602742241079</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +219,8 @@
     <MESSAGE value="1d not converging" />
     <MESSAGE value="1d mihjt work" />
     <MESSAGE value="For test" />
-    <option name="LAST_COMMIT_MESSAGE" value="For test" />
+    <MESSAGE value="pushsum initialization" />
+    <option name="LAST_COMMIT_MESSAGE" value="pushsum initialization" />
   </component>
   <component name="WindowStateProjectService">
     <state x="524" y="268" width="632" height="510" key="#Context_Actions" timestamp="1602535955337">
@@ -214,32 +231,36 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state width="477" height="466" key="DebuggerActiveHint/0.0.1680.1050@0.0.1680.1050" timestamp="1602720988384" />
-    <state width="1638" height="136" key="GridCell.Tab.0.bottom" timestamp="1602732885078">
+    <state x="167" y="94" key="DiffContextDialog" timestamp="1602733610355">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="136" key="GridCell.Tab.0.bottom/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602732885078" />
-    <state width="1638" height="136" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1602723861472" />
+    <state x="167" y="94" key="DiffContextDialog/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733610355" />
+    <state width="1638" height="136" key="GridCell.Tab.0.bottom" timestamp="1602744738689">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="136" key="GridCell.Tab.0.bottom/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733694420" />
+    <state width="1638" height="136" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1602744738689" />
     <state width="1638" height="295" key="GridCell.Tab.0.bottom/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672624" />
     <state width="1638" height="295" key="GridCell.Tab.0.bottom/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817147" />
-    <state width="1638" height="136" key="GridCell.Tab.0.center" timestamp="1602732885077">
+    <state width="1638" height="136" key="GridCell.Tab.0.center" timestamp="1602744738687">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="136" key="GridCell.Tab.0.center/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602732885077" />
-    <state width="1638" height="136" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1602723861471" />
+    <state width="1638" height="136" key="GridCell.Tab.0.center/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733694418" />
+    <state width="1638" height="136" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1602744738687" />
     <state width="1638" height="295" key="GridCell.Tab.0.center/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672622" />
     <state width="1638" height="295" key="GridCell.Tab.0.center/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817145" />
-    <state width="1638" height="136" key="GridCell.Tab.0.left" timestamp="1602732885075">
+    <state width="1638" height="136" key="GridCell.Tab.0.left" timestamp="1602744738686">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="136" key="GridCell.Tab.0.left/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602732885075" />
-    <state width="1638" height="136" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1602723861470" />
+    <state width="1638" height="136" key="GridCell.Tab.0.left/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733694417" />
+    <state width="1638" height="136" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1602744738686" />
     <state width="1638" height="295" key="GridCell.Tab.0.left/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672619" />
     <state width="1638" height="295" key="GridCell.Tab.0.left/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817144" />
-    <state width="1638" height="136" key="GridCell.Tab.0.right" timestamp="1602732885077">
+    <state width="1638" height="136" key="GridCell.Tab.0.right" timestamp="1602744738688">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="136" key="GridCell.Tab.0.right/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602732885077" />
-    <state width="1638" height="136" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602723861471" />
+    <state width="1638" height="136" key="GridCell.Tab.0.right/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733694419" />
+    <state width="1638" height="136" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602744738688" />
     <state width="1638" height="295" key="GridCell.Tab.0.right/1680.-68.1440.877/0.0.1680.1050@0.0.1680.1050" timestamp="1602610672623" />
     <state width="1638" height="295" key="GridCell.Tab.0.right/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602610817146" />
     <state width="1638" height="253" key="GridCell.Tab.1.bottom" timestamp="1602730345168">
@@ -322,16 +343,17 @@
     </state>
     <state width="1638" height="253" key="GridCell.Tab.4.right/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602730345190" />
     <state width="1638" height="391" key="GridCell.Tab.4.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602721099418" />
-    <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog" timestamp="1602726727707">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog" timestamp="1602740994138">
+      <screen x="0" y="23" width="1680" height="957" />
     </state>
     <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602726727707" />
+    <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog/0.23.1680.957@0.23.1680.957" timestamp="1602740994138" />
     <state x="100" y="100" width="1480" height="850" key="VCS.FileHistoryDialog/1680.-68.1440.877/0.23.1680.963@0.23.1680.963" timestamp="1602531627686" />
-    <state x="439" y="265" key="Vcs.Push.Dialog.v2" timestamp="1602731216107">
+    <state x="439" y="265" key="Vcs.Push.Dialog.v2" timestamp="1602742243101">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602731216107" />
-    <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1602722693586" />
+    <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602733612860" />
+    <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1602742243101" />
     <state x="439" y="265" key="Vcs.Push.Dialog.v2/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602533750896" />
     <state x="610" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1602533236290">
       <screen x="0" y="0" width="1680" height="1050" />
@@ -343,39 +365,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GossipSimulator/Program.fs</url>
-          <line>75</line>
+          <line>77</line>
           <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="75">
             <startOffsets>
-              <option value="2108" />
+              <option value="2205" />
             </startOffsets>
             <endOffsets>
-              <option value="2155" />
+              <option value="2252" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GossipSimulator/Program.fs</url>
-          <line>76</line>
+          <line>78</line>
           <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="76">
             <startOffsets>
-              <option value="2174" />
+              <option value="2271" />
             </startOffsets>
             <endOffsets>
-              <option value="2243" />
+              <option value="2340" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/GossipSimulator/Program.fs</url>
-          <line>74</line>
+          <line>76</line>
           <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="74">
             <startOffsets>
-              <option value="2073" />
+              <option value="2170" />
             </startOffsets>
             <endOffsets>
-              <option value="2091" />
+              <option value="2188" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />
