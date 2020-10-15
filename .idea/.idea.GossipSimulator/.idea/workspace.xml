@@ -29,19 +29,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="1d line">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/contentModel.xml" afterDir="false" />
+    <list default="true" id="e73763af-8305-41bb-a001-bc62b1f19990" name="Default Changelist" comment="1d not converging">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GossipSimulator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GossipSimulator/Program.fs" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/Program.fs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/Debug/netcoreapp3.1/GossipSimulator.fsprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/GossipSimulator.fsproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/GossipSimulator.fsproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/GossipSimulator.fsproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/GossipSimulator.fsproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GossipSimulator/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GossipSimulator/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +110,7 @@
       <updated>1602531208758</updated>
       <workItem from="1602531224568" duration="8566000" />
       <workItem from="1602610764841" duration="6077000" />
-      <workItem from="1602697642361" duration="9744000" />
+      <workItem from="1602697642361" duration="10446000" />
     </task>
     <task id="LOCAL-00001" summary="imp2D changes">
       <created>1602531828312</created>
@@ -150,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602722685415</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="1d not converging">
+      <created>1602726365701</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1602726365701</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,7 +184,8 @@
     <MESSAGE value="imp2D changes" />
     <MESSAGE value="Topologies checked. Works correctly." />
     <MESSAGE value="1d line" />
-    <option name="LAST_COMMIT_MESSAGE" value="1d line" />
+    <MESSAGE value="1d not converging" />
+    <option name="LAST_COMMIT_MESSAGE" value="1d not converging" />
   </component>
   <component name="WindowStateProjectService">
     <state x="524" y="268" width="632" height="510" key="#Context_Actions" timestamp="1602535955337">
@@ -306,13 +304,15 @@
     </state>
     <state width="1638" height="391" key="GridCell.Tab.4.right/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602725578764" />
     <state width="1638" height="391" key="GridCell.Tab.4.right/0.0.1680.1050@0.0.1680.1050" timestamp="1602721099418" />
-    <state x="100" y="100" width="1480" height="850" key="VCS.FileHistoryDialog" timestamp="1602531627686">
-      <screen x="0" y="23" width="1680" height="963" />
-    </state>
-    <state x="100" y="100" width="1480" height="850" key="VCS.FileHistoryDialog/1680.-68.1440.877/0.23.1680.963@0.23.1680.963" timestamp="1602531627686" />
-    <state x="439" y="265" key="Vcs.Push.Dialog.v2" timestamp="1602722693586">
+    <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog" timestamp="1602726727707">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
+    <state x="100" y="84" width="1480" height="927" key="VCS.FileHistoryDialog/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602726727707" />
+    <state x="100" y="100" width="1480" height="850" key="VCS.FileHistoryDialog/1680.-68.1440.877/0.23.1680.963@0.23.1680.963" timestamp="1602531627686" />
+    <state x="439" y="265" key="Vcs.Push.Dialog.v2" timestamp="1602726376545">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050/1680.0.1920.1080@0.0.1680.1050" timestamp="1602726376545" />
     <state x="439" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1602722693586" />
     <state x="439" y="265" key="Vcs.Push.Dialog.v2/1680.-91.1440.900/0.0.1680.1050@0.0.1680.1050" timestamp="1602533750896" />
     <state x="610" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1602533236290">
@@ -328,10 +328,10 @@
           <line>76</line>
           <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="76">
             <startOffsets>
-              <option value="2237" />
+              <option value="2238" />
             </startOffsets>
             <endOffsets>
-              <option value="2284" />
+              <option value="2285" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="6" />
@@ -341,10 +341,10 @@
           <line>73</line>
           <properties documentPath="$PROJECT_DIR$/GossipSimulator/Program.fs" initialLine="73">
             <startOffsets>
-              <option value="2050" />
+              <option value="2051" />
             </startOffsets>
             <endOffsets>
-              <option value="2068" />
+              <option value="2069" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="7" />

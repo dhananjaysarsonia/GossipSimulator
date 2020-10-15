@@ -65,7 +65,7 @@ let gossipActor(mailbox : Actor<_>) =
                 mailbox.Self <! NeighbourGossip(actors)
             
             if start = false then
-                start = true
+                start <- true
             if count = 10 then
                 mailbox.Context.Parent <! KillMe //please
            // else
