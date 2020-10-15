@@ -9,13 +9,14 @@ open Akka.FSharp
 open Akka.Actor
 open System.Diagnostics
 open Akka.Util
+open System.Threading;
 
 //let's make a gossip actor first and then create a topology
 //input will be num_nodes, topology, algorithm
 
 
 //let nNodes = 100
-let total_nodes = 1000
+let total_nodes = 100
 let topology = "line"
 let algorithm = "gossip"
 let random = new System.Random()
@@ -73,9 +74,12 @@ let gossipActor(mailbox : Actor<_>) =
         | NeighbourGossip(actors) ->
             if count < 10 then
                 let selected = random.Next(0, neighbour.Length)
-              //  printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
+                //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
                 actors.[neighbour.[selected]] <! Gossip(actors)
                 mailbox.Self <! NeighbourGossip(actors)
+                Thread.Sleep(10)
+           //else
+                //printf "finally not selecting \n"
             //Async.Sleep 100 |> ignore
         | Initialize(l) ->
             neighbour <- l     
@@ -228,16 +232,17 @@ let supervisorActor (mailBox : Actor<_>) =
                 let name = sprintf "%d" i
                // printf "%d" i
                 actors.[i] <- spawn mailBox name gossipActor
-                let connections = full i total_nodes 
+                let connections = line i total_nodes 
                 actors.[i] <! Initialize connections 
                 
-            actors.[1] <! Gossip(actors)
+            actors.[50] <! Gossip(actors)
     
         | KillMe ->
             count <- count + 1
             let child = mailBox.Sender ()
             printf "%A" child.Path.Name
             printf "%d \n" count
+            child <! PoisonPill.Instance
         return! loop()
   
     }
