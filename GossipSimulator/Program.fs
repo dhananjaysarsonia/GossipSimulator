@@ -17,7 +17,18 @@ open System.Threading;
 
 //let nNodes = 100
 //#time "on"
-let total_nodes = 64
+let mutable total_nodes = 64
+let LINE = "line"
+let TWO_D = "twod"
+let IMP_TWOD = "imptwod"
+let FULL = "full"
+
+
+
+let GOSSIP = "gossip"
+let PUSHSUM = "pushsum"
+
+
 let topology = "line"
 //let algorithm = "gossip"
 let algorithm = "gossip"  
@@ -297,13 +308,6 @@ let line node total_nodes =
     neighbour_list    
     
     
-//let imp2D node total_nodes =
-//    let neighbour_list =
-//        (Array.append[|
-//          let primary_list =  2D(node, total_nodes)
-//          let random-node = [|random.Next(1,total_nodes)|]
-//        |])
-
 let generate_random (primary_list: int []) (total_nodes: int) (node:int): int [] =
     let mutable temp = random.Next(1, total_nodes)
     while(primary_list |> Array.exists(fun elem -> elem = temp && elem = node )) do
@@ -316,8 +320,32 @@ let imp2D node total_nodes N =
     Array.append primary_list temp
 
 
+let mutable side = 0    
+let perfectSquare =
+    let mutable nodes = total_nodes
+    let newSide = ceil(sqrt(float nodes))
+    let newTotal = newSide*newSide
+    total_nodes <- int newTotal
+    side <- int newSide
+    //(int <| newTotal, int <| side)
 
 
+    
+//change square here
+if topology = "imptwod" || topology = "twod" then
+    perfectSquare
+
+
+let topologySelector i =
+    match topology with
+    | "full" ->
+        full i total_nodes
+    | "twod" ->
+        twoD i total_nodes side
+    | "line" ->
+        line i total_nodes
+    | "imptwod" ->
+        imp2D i total_nodes side
 
 let supervisorActor (mailBox : Actor<_>) =
     let mutable count = 0
@@ -335,25 +363,28 @@ let supervisorActor (mailBox : Actor<_>) =
                     let name = sprintf "%d" i
                    // printf "%d" i
                     actors.[i] <- spawn mailBox name gossipActor
-                    let connections = twoD i total_nodes 8
-                    actors.[i] <! Initialize connections 
+                    let connections = topologySelector i
+                    //let connections = twoD i total_nodes 8
+                    actors.[i] <! Initialize connections
                     
-                actors.[50] <! Gossip(actors)
+                let fireStarter = random.Next(0, total_nodes)
+                    
+                actors.[fireStarter] <! Gossip(actors)
                 
             | "pushsum" ->
                 for i in 1 .. total_nodes do
                     let name = sprintf "%d" i
                     actors.[i] <- spawn mailBox name pushsumActor
-                    let connections = line i total_nodes 
+                    let connections = topologySelector i
                     actors.[i] <! Initialize connections
                     actors.[i] <! InitializePushSum(decimal <| i,decimal <| 1)
-                
-                actors.[50] <! PushSum(0m,0m) 
+                let fireStarter = random.Next(0, total_nodes)
+                actors.[fireStarter] <! PushSum(0m,0m) 
             
             
             
     
-        | KillMe ->
+        | KillMe -> //please 
             count <- count + 1
             let child = mailBox.Sender ()
             printf "%A" child.Path.Name
@@ -362,9 +393,7 @@ let supervisorActor (mailBox : Actor<_>) =
             stuckActors.[int <| child.Path.Name] <- 0
             if count = total_nodes then
                  mailBox.Context.System.Terminate () |> ignore
-            //child <! PoisonPill.Instance
-            //printf "dead child name: %d \n" (int <| child.Path.Name)
-            
+
             
             
         | Stuck ->
@@ -386,9 +415,7 @@ let supervisorActor (mailBox : Actor<_>) =
                     con <- false
                  i <- i + 1
             
-//            for i in 0 .. (stuckActors.Length - 1) do
-//                if i <> index && stuckActors.[i] = deadOrStuck then
-//                    actors.[index] <! Gossip
+
                     
         
             
@@ -400,31 +427,4 @@ let system = System.create "system" (Configuration.defaultConfig())
 let supervisor = spawn system "supervisor" supervisorActor
 supervisor <! Start
 system.WhenTerminated.Wait ()
-//System.Console.ReadLine() |> ignore
-//    let neighbour_list =
-//        (Array.append[|
-//          let primary_list =  twoD node total_nodes N
-//          generate_random primary_list total_nodes
-//        |])   
-//    neighbour_list
 
-
-//to check topology implementations
-//let temp2d = imp2D 5 16 4
-//for i in temp2d do
-//    printfn "%d" i
-//
-
-//first the 
-
-
-
-
-//start the process
-
-
-
-
-
-
-//terminate and calculate
