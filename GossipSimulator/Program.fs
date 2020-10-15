@@ -16,10 +16,10 @@ open System.Threading;
 
 
 //let nNodes = 100
-let total_nodes = 500
+let total_nodes = 100
 let topology = "line"
 //let algorithm = "gossip"
-let algorithm = "pushsum"  
+let algorithm = "gossip"  
 let random = new System.Random()
 let deadOrStuck = 1
 type sum_weight = {
@@ -54,12 +54,14 @@ type Message =
     |PSCantProcess of decimal*decimal
     |KillMe
     |Stuck
+    |ByPass
 
 
 
 let gossipActor(mailbox : Actor<_>) =
     let mutable count = 0
     let mutable start = false
+    let mutable alive = true
     let mutable neighbour : int[] = [||]
     //let mutable neighbour : int[] = [||]
     let rec loop() = actor{
@@ -79,20 +81,51 @@ let gossipActor(mailbox : Actor<_>) =
             if start = false then
                 start <- true
             if count = 10 then
+                alive <- false
                 mailbox.Context.Parent <! KillMe //please
            // else
+//            if count >= 10 then
+//               let selected = random.Next(0, neighbour.Length)
+//                    //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
+//               actors.[neighbour.[selected]] <! Gossip(actors)
+           
                 
         | NeighbourGossip(actors) ->
             if count < 10 then
-                
-                let selected = random.Next(0, neighbour.Length)
-                //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
-                actors.[neighbour.[selected]] <! Gossip(actors)
-                mailbox.Self <! NeighbourGossip(actors)
+                let mutable iHaveFriends = false
+//                
+                for i in 0 .. (neighbour.Length - 1) do
+                    if deadActors.[neighbour.[i]] <> deadOrStuck then
+                        iHaveFriends <- true
+                        
+                if iHaveFriends then         
+                    let selected = random.Next(0, neighbour.Length)
+                    //printf "selected next: %A \n" actors.[neighbour.[selected]].Path.Name
+                    actors.[neighbour.[selected]] <! Gossip(actors)
+                    mailbox.Self <! NeighbourGossip(actors)
+                    
+                else
+                    let selected = random.Next(0, neighbour.Length)
+                    actors.[neighbour.[selected]] <! ByPass
+                    mailbox.Self <! NeighbourGossip(actors)
+                    
                 Thread.Sleep(10)
-           //else
-                //printf "finally not selecting \n"
-            //Async.Sleep 100 |> ignore
+            
+        | ByPass ->
+            //Thread.Sleep(10)
+            if alive then
+                count <- count + 1
+            else
+                let selected = random.Next(0, neighbour.Length)
+                actors.[neighbour.[selected]] <! ByPass
+                
+                
+            if alive & count = 10 then
+                alive <- false
+                mailbox.Context.Parent <! KillMe //please
+                
+        
+                
         | Initialize(l) ->
             neighbour <- l     
         return! loop()
@@ -301,7 +334,7 @@ let supervisorActor (mailBox : Actor<_>) =
                     let name = sprintf "%d" i
                    // printf "%d" i
                     actors.[i] <- spawn mailBox name gossipActor
-                    let connections = line i total_nodes 
+                    let connections = twoD i total_nodes 10
                     actors.[i] <! Initialize connections 
                     
                 actors.[50] <! Gossip(actors)
@@ -325,19 +358,35 @@ let supervisorActor (mailBox : Actor<_>) =
             printf "%A" child.Path.Name
             printf "%d \n" count
             deadActors.[int <| child.Path.Name] <- deadOrStuck
+            stuckActors.[int <| child.Path.Name] <- 0
             //child <! PoisonPill.Instance
             //printf "dead child name: %d \n" (int <| child.Path.Name)
             
             
             
         | Stuck ->
-            printf "here %d" stuck
+            //printf "here %d \n" stuck
             let child = mailBox.Sender ()
             let index = int <| child.Path.Name
+            
             if stuckActors.[index] = 0 then
                 stuck <- stuck + 1
                 stuckActors.[index] <- deadOrStuck
-                
+            let mutable con = true
+            let mutable i = 0
+            
+            while i < 2*stuckActors.Length && con do
+                 let selected = random.Next(0, stuckActors.Length)
+                 if stuckActors.[selected] = deadOrStuck then
+                    printf "found a partner \n"
+                    actors.[selected] <! Gossip
+                    con <- false
+                 i <- i + 1
+            
+//            for i in 0 .. (stuckActors.Length - 1) do
+//                if i <> index && stuckActors.[i] = deadOrStuck then
+//                    actors.[index] <! Gossip
+                    
         
             
         return! loop()
