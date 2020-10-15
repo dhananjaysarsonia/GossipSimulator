@@ -35,28 +35,46 @@ let mutable pushsum_array  = Array.init<sum_weight> total_nodes (fun x -> {value
 
 //create message types here
 type Message =
-    |Gossip
+    |Gossip of IActorRef[]
+    |NeighbourGossip of IActorRef[]
     |PushSum 
-    |Initialize of list<ActorRefs>
+    |Initialize of int[]
     |Dead
     |AllDead //called when all the neighbours are dead and I have nothing else to do
     |HeardYou
     |TempDead
+    |Start
     |KillMe
 
 
 let gossipActor(mailbox : Actor<_>) =
     let mutable count = 0
-    let mutable neighbour : list<ActorRefs> = []
+    let mutable start = false
+    let mutable neighbour : int[] = [||]
     //let mutable neighbour : int[] = [||]
     let rec loop() = actor{
         let! message = mailbox.Receive()
         match message with
-        | Gossip ->
+        | Gossip(actors) ->
+           
             count <- count + 1
+            
+//            let selected = random.Next(0, neighbour.Length)
+//            actors.[neighbour.[selected]] <! Gossip(actors)
+            if start = false then 
+                mailbox.Self <! NeighbourGossip(actors)
+            
+            if start = false then
+                start = true
             if count = 10 then
                 mailbox.Context.Parent <! KillMe //please
+           // else
                 
+        | NeighbourGossip(actors) ->
+            let selected = random.Next(0, neighbour.Length)
+            actors.[neighbour.[selected]] <! Gossip(actors)
+            mailbox.Self <! NeighbourGossip(actors)
+            
         | Initialize(l) ->
             neighbour <- l     
         return! loop()
@@ -87,25 +105,10 @@ let pushsumActor(mailbox : Actor<_>)=
         return! loop()    
     }
     loop()
-
- 
+//let mutable actors : list<IActorRef> = []
+let actors : IActorRef array = Array.zeroCreate (total_nodes + 1)
 //parent actor
-let supervisorActor (mailBox : Actor<_>) =
-    let rec loop() = actor{
-        let actors = [for i in 1 .. total_nodes ->
-            let name = sprintf "%i" i
-            spawn mailBox name gossipActor ]
-        //toDo for loop
-        //for all actors
-        //2d get neighbour
-        //currentActor <| neighbour
-        
-        
-        return! loop()
-    }
-    loop()
-let system = System.create "system" (Configuration.defaultConfig())
-let supervisor = spawn system "supervisor" supervisorActor
+
 //create actors here
 //first is the Gossip worker, I will call it False Media lol
 
@@ -206,8 +209,38 @@ let imp2D node total_nodes N =
     let primary_list =  twoD node total_nodes N
     let temp = generate_random primary_list total_nodes node
     Array.append primary_list temp
-    
 
+
+
+
+
+let supervisorActor (mailBox : Actor<_>) =
+    let mutable count = 0
+    let rec loop() = actor{
+       
+        let! message = mailBox.Receive()
+        match message with
+        | Start ->
+            for i in 1 .. (total_nodes) do
+               // printf "%d" i
+                let name = sprintf "%d" i
+                actors.[i] <- spawn mailBox name gossipActor
+                let connections = line i total_nodes
+                actors.[i] <! Initialize connections
+                
+            actors.[50] <! Gossip(actors)
+    
+        | KillMe ->
+            count <- count + 1
+            printf "%d " count
+        return! loop()
+  
+    }
+    loop()
+let system = System.create "system" (Configuration.defaultConfig())
+let supervisor = spawn system "supervisor" supervisorActor
+supervisor <! Start
+System.Console.ReadLine() |> ignore
 //    let neighbour_list =
 //        (Array.append[|
 //          let primary_list =  twoD node total_nodes N
